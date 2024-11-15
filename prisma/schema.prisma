@@ -1,0 +1,37 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id         String   @id @default(uuid())
+  username   String   @unique
+  firstName  String
+  lastName   String?
+  photoUrl   String?
+  points     Int      @default(0)
+  visitCount Int      @default(0)
+  lastVisit  DateTime @default(now())
+  lastActive DateTime @default(now())
+  isAdmin    Boolean  @default(false)
+  role       String   @default("participant")
+  streak     Int      @default(0)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model Program {
+  id          String   @id @default(uuid())
+  dayOfWeek   Int      // 1-5 for Monday-Friday
+  startTime   DateTime
+  endTime     DateTime
+  title       String
+  description String?
+  location    String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
